@@ -9,6 +9,6 @@ module.exports = function (sequelize, DataTypes) {
         preptime: DataTypes.INTEGER,
         servings: DataTypes.INTEGER,
         price: DataTypes.STRING,
-        owner: DataTypes.INTEGER
+        // owner: DataTypes.INTEGER
     })
 }
