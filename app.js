@@ -7,6 +7,7 @@ let bodyParser = require("body-parser");
 let user = require('./controllers/usercontroller');
 let menu = require('./controllers/menucontroller');
 let combomenu = require('./controllers/combomenucontroller');
+let cart = require('./controllers/cartcontroller');
 // let cart = require('./controllers/cartcontroller');
 // let checkout = require('./controllers/checkoutcontroller');
 
@@ -17,6 +18,7 @@ app.use(require("./middleware/header"));
 
 app.use('/api/user', user);
 app.use('/api/menu', menu);
+app.use('/api/cart', cart);
 
 app.use(require("./middleware/validate-session"));
 // protected routes follow requiring session token
