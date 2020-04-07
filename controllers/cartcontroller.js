@@ -1,7 +1,7 @@
 let express = require('express')
 let router = express.Router()
 let sequelize = require('../db')
-let ComboMenuModel = sequelize.import('../models/combomenu')
+let ComboMenuModel = sequelize.import('../models/cart')
 
 //Get All Recipies by User ID
 router.get('/myrecipes', function (req, res) {
