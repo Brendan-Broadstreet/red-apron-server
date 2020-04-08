@@ -14,13 +14,14 @@ sequelize.sync();
 app.use(bodyParser.json());
 app.use(require("./middleware/header"));
 app.use('/api/user', user);
-app.use('/api/menu', menu);
-app.use('/api/cart', cart)
+
+
 
 
 app.use(require("./middleware/validate-session"));
 // protected routes follow requiring session token
-
+app.use('/api/cart', cart)
+app.use('/api/menu', menu);
 
 
 

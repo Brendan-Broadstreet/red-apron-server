@@ -4,6 +4,6 @@ module.exports = function (sequelize, DataTypes) {
         productName: DataTypes.STRING,
         qty: DataTypes.INTEGER,
         price: DataTypes.STRING,
-        // owner: DataTypes.INTEGER
+        owner: DataTypes.INTEGER
     })
 }

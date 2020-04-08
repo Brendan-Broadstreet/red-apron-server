@@ -1,14 +1,13 @@
 let express = require('express')
 let router = express.Router()
 let sequelize = require('../db')
-let ComboMenuModel = sequelize.import('../models/cart')
+let CartModel = sequelize.import('../models/cart')
 
 //Get All Recipies by User ID
-router.get('/myrecipes', function (req, res) {
-    let primaryKey = req.params.id
+router.get('/mycart', function (req, res) {
     let userid = req.user.id
-    ComboMenuModel.findAll({
-        where: { id: primaryKey, owner: userid }
+    CartModel.findAll({
+        where: { owner: userid }
     }).then(
         function findAllSuccess(data) {
             res.json(data)
@@ -19,32 +18,18 @@ router.get('/myrecipes', function (req, res) {
     )
 })
 
-//View Menu
+//Post to Cart
 router.post('/', function (req, res) {
     let owner = req.user.id
-    let name = req.body.combomenu.name
-    let img = req.body.combomenu.img
-    let category = req.body.combomenu.category
-    let entree = req.body.combomenu.entree
-    let side = req.body.combomenu.side
-    let ingredients = req.body.combomenu.ingredients
-    let instructions = req.body.combomenu.instructions
-    let cooktime = req.body.combomenu.cooktime
-    let preptime = req.body.combomenu.preptime
-    let servings = req.body.combomenu.servings
-    let price = req.body.combomenu.price
+    let productId = req.body.cart.productId
+    let productName = req.body.cart.productName
+    let qty = req.body.cart.qty
+    let price = req.body.cart.price
 
-    ComboMenuModel.create({
-        name: name,
-        img: img,
-        category: category,
-        entree: entree,
-        side: side,
-        ingredients: ingredients,
-        instructions: instructions,
-        cooktime: cooktime,
-        preptime: preptime,
-        servings: servings,
+    CartModel.create({
+        productName: productName,
+        productId: productId,
+        qty: qty,
         price: price,
         owner: owner
     }).then(
@@ -60,34 +45,19 @@ router.post('/', function (req, res) {
 //Update Combo Menu Item
 router.put('/update/:id', function (req, res) {
     let userid = req.user.id
+    let productId = req.body.cart.productId
+    let productName = req.body.cart.productName
+    let qty = req.body.cart.qty
+    let price = req.body.cart.price
     let primaryKey = req.params.id
-    let name = req.body.combomenu.name
-    let img = req.body.combomenu.img
-    let category = req.body.combomenu.category
-    let entree = req.body.combomenu.entree
-    let side = req.body.combomenu.side
-    let ingredients = req.body.combomenu.ingredients
-    let instructions = req.body.combomenu.instructions
-    let cooktime = req.body.combomenu.cooktime
-    let preptime = req.body.combomenu.preptime
-    let servings = req.body.combomenu.servings
-    let price = req.body.combomenu.price
-    let owner = req.user.id
-
-    ComboMenuModel.update(
+    console.log(req.user.id)
+    CartModel.update(
         {
-            name: name,
-            img: img,
-            category: category,
-            entree: entree,
-            side: side,
-            ingredients: ingredients,
-            instructions: instructions,
-            cooktime: cooktime,
-            preptime: preptime,
-            servings: servings,
+            productName: productName,
+            productId: productId,
+            qty: qty,
             price: price,
-            owner: owner
+            owner: userid
         },
         { where: { id: primaryKey, owner: userid } }
     ).then(data => {
@@ -98,11 +68,11 @@ router.put('/update/:id', function (req, res) {
         err => res.send(500, err.message);
 })
 
-//Delete Combo Menu
+//Delete Cart Item
 router.delete('/delete/:id', function (req, res) {
     let primaryKey = req.params.id;
     let userid = req.user.id;
-    ComboMenuModel.destroy({
+    CartModel.destroy({
         where: { id: primaryKey, owner: userid }
     }).then(data => {
         return data > 0
