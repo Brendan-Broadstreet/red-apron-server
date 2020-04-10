@@ -4,7 +4,7 @@ let sequelize = require('../db')
 let CartModel = sequelize.import('../models/cart')
 
 //Get All Recipies by User ID
-router.get('/mycart', function (req, res) {
+router.get('/', function (req, res) {
     let userid = req.user.id
     CartModel.findAll({
         where: { owner: userid }

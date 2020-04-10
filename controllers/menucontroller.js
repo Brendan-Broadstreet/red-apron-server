@@ -5,11 +5,8 @@ let MenuModel = sequelize.import('../models/menu')
 
 //Get All Recipies by User ID
 router.get('/myrecipes', function (req, res) {
-    let primaryKey = req.params.id
     let userid = req.user.id
-    MenuModel.findAll({
-        where: { id: primaryKey, owner: userid }
-    }).then(
+    MenuModel.findAll().then(
         function findAllSuccess(data) {
             res.json(data)
         },
