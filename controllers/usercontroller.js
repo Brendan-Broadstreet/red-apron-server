@@ -18,14 +18,14 @@ router.post('/signup', function (req, res) {
     var admin = req.body.user.admin;
 
     User.create({
-            firstname: firstName,
-            lastname: lastName,
-            username: username,
-            email: email,
-            passwordhash: bcrypt.hashSync(password, 10),
-            challengequestion: challengequestion,
-            admin: admin
-        })
+        firstname: firstName,
+        lastname: lastName,
+        username: username,
+        email: email,
+        passwordhash: bcrypt.hashSync(password, 10),
+        challengequestion: challengequestion,
+        admin: admin
+    })
         .then(
 
             function createSuccess(user) {
@@ -52,8 +52,8 @@ router.post("/login", function (req, res) {
     var password = req.body.user.password;
 
     User.findOne({
-            where: { email: email }
-        })
+        where: { email: email }
+    })
         .then(user => {
             user ? comparePasswords(user) : res.send("User not found in our database ");
 
@@ -78,6 +78,6 @@ router.post("/login", function (req, res) {
                 });
             }
         });
-});
+})
 
 module.exports = router;

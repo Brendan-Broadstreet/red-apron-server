@@ -1,6 +1,6 @@
 var jwt = require('jsonwebtoken');
 var sequelize = require('../db');
-var Bowler = sequelize.import('../models/user.js');
+var User = sequelize.import('../models/user.js');
 
 module.exports = function (req, res, next) {
     if (req.method == 'OPTIONS') {
@@ -22,7 +22,7 @@ module.exports = function (req, res, next) {
         }
 
         function findUser(decoded) {
-            Bowler.findOne({
+            User.findOne({
                 where: {
                     id: decoded.id
                 }
