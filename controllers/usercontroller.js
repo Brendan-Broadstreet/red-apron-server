@@ -30,7 +30,8 @@ router.post('/signup', function (req, res) {
 
             function createSuccess(user) {
                 var token = jwt.sign({
-                    id: user.id
+                    id: user.id,
+                    admin: user.admin
                 }, process.env.JWT_SECRET, {
                     expiresIn: 60 * 60 * 24
                 });
@@ -66,7 +67,8 @@ router.post("/login", function (req, res) {
             function generateToken(user) {
 
                 var token = jwt.sign({
-                    id: user.id
+                    id: user.id,
+                    admin: user.admin
                 }, process.env.JWT_SECRET, {
                     expiresIn: 60 * 60 * 24
                 });
