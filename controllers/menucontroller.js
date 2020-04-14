@@ -27,7 +27,7 @@ router.post('/', function (req, res) {
     let preptime = req.body.menu.preptime
     let servings = req.body.menu.servings
     let price = req.body.menu.price
-    // let owner = req.user.id
+    let owner = req.user.id
 
     MenuModel.create({
         name: name,
@@ -39,7 +39,7 @@ router.post('/', function (req, res) {
         preptime: preptime,
         servings: servings,
         price: price,
-        // owner: owner
+        owner: owner
     }).then(
         function createSuccess(response) {
             res.json({ message: 'success', added: response });
@@ -54,35 +54,19 @@ router.post('/', function (req, res) {
 router.put('/update/:id', function (req, res) {
     let userid = req.user.id
     let primaryKey = req.params.id
-    let name = req.body.menu.name
-    let img = req.body.menu.img
     let category = req.body.menu.category
-    let ingredients = req.body.menu.ingredients
-    let instructions = req.body.menu.instructions
-    let cooktime = req.body.menu.cooktime
-    let preptime = req.body.menu.preptime
-    let servings = req.body.menu.servings
     let price = req.body.menu.price
-    let owner = req.user.id
 
     MenuModel.update(
         {
-            name: name,
-            img: img,
             category: category,
-            ingredients: ingredients,
-            instructions: instructions,
-            cooktime: cooktime,
-            preptime: preptime,
-            servings: servings,
-            price: price,
-            owner: owner
+            price: price
         },
-        { where: { id: primaryKey, owner: userid } }
+        { where: { id: primaryKey } }
     ).then(data => {
         return data > 0
-            ? res.send('Update Successful!')
-            : res.send('Error, no updates where made.');
+            ? res.send({ message: 'Update Successful!' })
+            : res.send({ message: 'Error, no updates where made.' });
     }),
         err => res.send(500, err.message);
 })
@@ -95,8 +79,8 @@ router.delete('/delete/:id', function (req, res) {
         where: { id: primaryKey, owner: userid }
     }).then(data => {
         return data > 0
-            ? res.send('Menu item removed')
-            : res.send('Error, nothing removed');
+            ? res.send({ message: 'Menu item removed' })
+            : res.send({ message: 'Error, nothing removed' });
     }),
         err => res.send(500, err.message);
 });
