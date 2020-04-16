@@ -62,7 +62,10 @@ router.put('/update/:id', function (req, res) {
             category: category,
             price: price
         },
-        { where: { id: primaryKey } }
+        {
+            where: { id: primaryKey },
+            order: [['updatedAt', 'DESC']]
+        }
     ).then(data => {
         return data > 0
             ? res.send({ message: 'Update Successful!' })
